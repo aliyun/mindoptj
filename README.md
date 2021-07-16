@@ -1,12 +1,14 @@
 MindOpt Java SDK
 ================
 MindOpt (Machine INtelligence of Damo OPTimizer), a high performance mathematical programming optimizer, developed by Decision Intelligence Lab of Damo Academy.
+
 Contact: solver.damo@list.alibaba-inc.com
 
 
 Example
 =======
 Illustration of a simple linear programming problem:
+
 ```java
 package example;
 
