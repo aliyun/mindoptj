@@ -219,7 +219,7 @@ public class MdoMatrixImpl implements MdoMatrix {
         double r = rhs;
 
         if (sense == Mdo.LESS_EQUAL) {
-            l = -1e20;
+            l = Mdo.NEGATIVE_INFINITY;
         } else if (sense == Mdo.GREATER_EQUAL) {
             r = Mdo.INFINITY;
         }
