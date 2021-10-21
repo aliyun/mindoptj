@@ -38,10 +38,23 @@ interface MdoNativeAPI extends Library {
             Pointer /* char * */ val
     );
 
+    int /* MdoResult */ Mdo_setStrAttr(
+            Pointer /* void * */ mdl,
+            Pointer /* char * */ att,
+            Pointer /* char * */ val
+    );
+
     int /* MdoResult */ Mdo_setIntAttr(
             Pointer /* void * */ mdl,
             Pointer /* char * */ att,
             int /* int */ val
+    );
+
+    int /* MdoResult */ Mdo_getStrAttr(
+            Pointer /* void * */ mdl,
+            Pointer /* char * */ att,
+            int /* int * */ size,
+            Pointer /* char * */ val
     );
 
     int /* MdoResult */ Mdo_getIntAttr(

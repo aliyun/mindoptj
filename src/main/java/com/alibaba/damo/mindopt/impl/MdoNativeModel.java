@@ -86,6 +86,23 @@ public class MdoNativeModel {
         );
     }
     /**
+     *  Change the value of a string-valued model attribute.
+     *  @param att [in] A string-valued model attribute.
+     *  @param val [in] A new value.
+     *  @return MdoResult code
+     *
+     */
+    public int setStrAttr(
+            Pointer att,
+            Pointer val
+    ) {
+        return inst().Mdo_setStrAttr(
+                getModel(),
+                att,
+                val
+        );
+    }
+    /**
      * Change the value of a 32-bit integer-valued model attribute.
      * @param att [in] A 32-bit integer-valued model attribute.
      * @param val [in] A new value.
@@ -98,6 +115,25 @@ public class MdoNativeModel {
         return inst().Mdo_setIntAttr(
                 getModel(),
                 att,
+                val
+        );
+    }
+    /**
+     * Retrieve the value of a string-valued model attribute.
+     * @param att [in] A string-valued model attribute.
+     * @param size [in] Max length of ``val``.
+     * @param val [out] The current value.
+     * @return MdoResult code
+     */
+    public int getStrAttr(
+            Pointer att,
+            int size,
+            Pointer val
+    ) {
+        return inst().Mdo_getStrAttr(
+                getModel(),
+                att,
+                size,
                 val
         );
     }

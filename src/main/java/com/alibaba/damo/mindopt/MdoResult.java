@@ -29,6 +29,10 @@ public enum MdoResult{
     MDO_NOMEMORY(-2),
     /** License is not valid.  */
     MDO_INVALID_LICENSE(-10),
+    /** MINDOPT_HOME not found. */
+    MDO_HOME_ENV_NOT_FOUND(-11),
+    /**  MINDOPT bin folder is not found. */
+    MDO_LIB_FOLDER_NOT_FOUND(-12),
     /** (I/O) General IO error.  */
     MDO_IO_ERROR(-1000),
     /** (I/O) Failed to read data from file.  */

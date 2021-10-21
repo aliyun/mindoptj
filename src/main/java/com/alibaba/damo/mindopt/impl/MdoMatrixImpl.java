@@ -694,13 +694,14 @@ public class MdoMatrixImpl implements MdoMatrix {
 
     @Override
     public void setStrAttr(String att, String val) {
-        MdoResult.checkResult(MdoResult.MDO_MODEL_INVALID_STR_ATTR.getCode());
+        MdoResult.checkResult(model.setStrAttr(MemoryUtil.charArray(att), MemoryUtil.charArray(val)));
     }
 
     @Override
     public String getStrAttr(String att) {
-        MdoResult.checkResult(MdoResult.MDO_MODEL_INVALID_STR_ATTR.getCode());
-        return null;
+        Pointer buffer = new Memory(Mdo.MAX_NATIVE_STR_LEN);
+        MdoResult.checkResult(model.getStrAttr(MemoryUtil.charArray(att), Mdo.MAX_NATIVE_STR_LEN, buffer));
+        return Native.toString(buffer.getByteArray(0, Mdo.MAX_NATIVE_STR_LEN));
     }
 
     @Override

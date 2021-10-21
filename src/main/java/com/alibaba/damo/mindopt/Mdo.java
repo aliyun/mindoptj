@@ -83,6 +83,8 @@ public class Mdo {
     public static final String REAL_ATTR_LHS = "LHS";
     public static final String REAL_ATTR_RHS = "RHS";
 
+    public static final String STR_ATTR_PROB_NAME = "ProbName";
+
     public static final String STR_ATTR_COL_NAME = "ColName";
     public static final String STR_ATTR_ROW_NAME = "RowName";
 
