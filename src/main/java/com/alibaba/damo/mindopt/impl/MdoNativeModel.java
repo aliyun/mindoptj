@@ -17,33 +17,24 @@
 package com.alibaba.damo.mindopt.impl;
 
 import com.sun.jna.Callback;
-import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
 /**
- * The mindopt native interface, it is strongly recommended to use MdoModel instead
+ * The mindopt model native interface, it is strongly recommended to use MdoModel instead
  */
 public class MdoNativeModel {
-    public static void load(String libraryName) {
-        if (INSTANCE == null) {
-            INSTANCE = (MdoNativeAPI) Native.loadLibrary(libraryName, MdoNativeAPI.class);
-        }
-    }
-
     static MdoNativeAPI inst() {
-        if (INSTANCE == null) {
+        if (MdoNativeAPI.InstanceHolder.get() == null) {
             throw new RuntimeException("Mdo.load() needs to be called at very beginning.");
         }
-        return INSTANCE;
+        return MdoNativeAPI.InstanceHolder.get();
     }
 
     private Pointer getModel() {
         return model.getValue();
     }
-
-    private static MdoNativeAPI INSTANCE;
-    private PointerByReference model = new PointerByReference();
+    PointerByReference model = new PointerByReference();
     /**
      * Change the value of a string-valued row/column attribute.
      * @param att [in] A string-valued row/column attribute.
@@ -1183,7 +1174,7 @@ public class MdoNativeModel {
     }
     /**
      * Retrieve a set of values of all specified elements in the constraint matrix.
-     * @param size [in] Number of elemenets to access.
+     * @param size [in] Number of elements to access.
      * @param row_indices [in] An array that holds the row index of elements to access.
      * @param col_indices [in] An array that holds the column index of elements to access.
      * @param values [in] An array that will hold the current nonzero values of all specified elements in the constraint matrix.
@@ -1205,7 +1196,7 @@ public class MdoNativeModel {
     }
     /**
      * Modify a set of values of all specified elements in the constraint matrix.
-     * @param size [in] Number of elemenets to access.
+     * @param size [in] Number of elements to access.
      * @param row_indices [in] An array that holds the row index of elements to access.
      * @param col_indices [in] An array that holds the column index of elements to access.
      * @param values [in] An array that holds the new nonzero values for all specified elements in the constraint matrix.
@@ -1222,6 +1213,50 @@ public class MdoNativeModel {
                 size,
                 row_indices,
                 col_indices,
+                values
+        );
+    }
+    /**
+     * Retrieve a set of values of all specified elements in the quadratic matrix of a quadratic program.
+     * @param size [in] Number of elements to access.
+     * @param col_indices1 [in] An array that holds the first variable index of elements to access.
+     * @param col_indices2 [in] An array that holds the second variable index of elements to access.
+     * @param values [out] An array that will hold the current nonzero values of all specified elements.
+     * @return MdoResult code
+     */
+    public int getQuadraticElements(
+            int size,
+            Pointer col_indices1,
+            Pointer col_indices2,
+            Pointer values
+    ) {
+        return inst().Mdo_getQuadraticElements(
+                getModel(),
+                size,
+                col_indices1,
+                col_indices2,
+                values
+        );
+    }
+    /**
+     * Modify a set of values of all specified elements in the quadratic matrix of a quadratic program.
+     * @param size [in] Number of elements to access.
+     * @param col_indices1 [in] An array that holds the first variable index of elements to access.
+     * @param col_indices2 [in] An array that holds the second variable index of elements to access.
+     * @param values [in] An array that holds the new nonzero values for all specified elements.
+     * @return MdoResult code
+     */
+    public int setQuadraticElements(
+            int size,
+            Pointer col_indices1,
+            Pointer col_indices2,
+            Pointer values
+    ) {
+        return inst().Mdo_setQuadraticElements(
+                getModel(),
+                size,
+                col_indices1,
+                col_indices2,
                 values
         );
     }
@@ -1274,6 +1309,45 @@ public class MdoNativeModel {
                 size,
                 row_indices,
                 col_indices
+        );
+    }
+    /**
+     * Delete a set of elements from the quadratic matrix of a quadratic program.
+     * @param size [in] Number of elements to be deleted.
+     * @param col_indices1 [in] An array that holds the first variable index of elements to access.
+     * @param col_indices2 [in] An array that holds the second variable index of elements to access.
+     * @return MdoResult code
+     */
+    public int deleteQuadraticElements(
+            int size,
+            Pointer col_indices1,
+            Pointer col_indices2
+    ) {
+        return inst().Mdo_deleteQuadraticElements(
+                getModel(),
+                size,
+                col_indices1,
+                col_indices2
+        );
+    }
+
+    /**
+     *  Delete all elements from the constraint matrix.
+     *  @return MdoResult code.
+     */
+    public int deleteAllElements() {
+        return inst().Mdo_deleteAllElements(
+                getModel()
+        );
+    }
+
+    /**
+     *  Delete all elements from the quadratic matrix of a quadratic program.
+     *  @return MdoResult code
+     */
+    public int deleteAllQuadraticElements() {
+        return inst().Mdo_deleteAllQuadraticElements(
+                getModel()
         );
     }
     /**

@@ -18,11 +18,22 @@ package com.alibaba.damo.mindopt.impl;
 
 import com.sun.jna.Callback;
 import com.sun.jna.Library;
+import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.ptr.PointerByReference;
 
-interface MdoNativeAPI extends Library {
-
+public interface MdoNativeAPI extends Library {
+    class InstanceHolder {
+        static MdoNativeAPI INSTANCE;
+        public static MdoNativeAPI get() {
+            return INSTANCE;
+        }
+        public static void load(String libName) {
+            if (INSTANCE == null) {
+                INSTANCE = (MdoNativeAPI) Native.loadLibrary(libName, MdoNativeAPI.class);
+            }
+        }
+    }
     int /* MdoResult */ Mdo_setStrAttrIndex(
             Pointer /* void * */ mdl,
             Pointer /* char * */ att,
@@ -185,6 +196,19 @@ interface MdoNativeAPI extends Library {
             Pointer /* void * */ mdl,
             Callback /* void(*)( char *msg, void *userdata) */ logcb,
             Pointer /* void * */ userdata
+    );
+
+    int /* MdoResult */ Mdo_createEnv(
+            PointerByReference /* void * * */ env
+    );
+
+    int /* MdoResult */ Mdo_createMdlWithEnv(
+            PointerByReference /* void * * */ mdl,
+            Pointer /* void * */ env
+    );
+
+    void /* void */ Mdo_freeEnv(
+            PointerByReference /* void * * */ env
     );
 
     int /* MdoResult */ Mdo_createMdl(
@@ -451,6 +475,22 @@ interface MdoNativeAPI extends Library {
             Pointer /* double * */ values
     );
 
+    int /* MdoResult */ Mdo_getQuadraticElements(
+            Pointer /* void * */ mdl,
+            int /* int */ size,
+            Pointer /* int * */ col_indices1,
+            Pointer /* int * */ col_indices2,
+            Pointer /* double * */ values
+    );
+
+    int /* MdoResult */ Mdo_setQuadraticElements(
+            Pointer /* void * */ mdl,
+            int /* int */ size,
+            Pointer /* int * */ col_indices1,
+            Pointer /* int * */ col_indices2,
+            Pointer /* double * */ values
+    );
+
     int /* MdoResult */ Mdo_setElements(
             Pointer /* void * */ mdl,
             int /* int */ size,
@@ -476,6 +516,21 @@ interface MdoNativeAPI extends Library {
             int /* int */ size,
             Pointer /* int * */ row_indices,
             Pointer /* int * */ col_indices
+    );
+
+    int /* MdoResult */ Mdo_deleteQuadraticElements(
+            Pointer /* void * */ mdl,
+            int /* int */ size,
+            Pointer /* int * */ col_indices1,
+            Pointer /* int * */ col_indices2
+    );
+
+    int /*MdoResult */ Mdo_deleteAllElements(
+            Pointer /* void * */ mdl
+    );
+
+    int /*MdoResult */ Mdo_deleteAllQuadraticElements(
+            Pointer /* void * */ mdl
     );
 
     int /* MdoResult */ Mdo_setStrParam(

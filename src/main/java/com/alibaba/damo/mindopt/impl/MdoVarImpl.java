@@ -17,16 +17,16 @@
 package com.alibaba.damo.mindopt.impl;
 
 import com.alibaba.damo.mindopt.MdoCons;
-import com.alibaba.damo.mindopt.MdoMatrix;
+import com.alibaba.damo.mindopt.MdoProblem;
 import com.alibaba.damo.mindopt.MdoVar;
 
 import java.util.Arrays;
 
-class MdoVarImpl implements MdoVar {
-    MdoMatrix model;
+public class MdoVarImpl implements MdoVar {
+    MdoProblem model;
     int index;
 
-    public MdoVarImpl(MdoMatrix model, int index) {
+    public MdoVarImpl(MdoProblem model, int index) {
         this.model = model;
         this.index = index;
     }

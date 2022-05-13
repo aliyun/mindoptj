@@ -16,6 +16,7 @@
 
 package com.alibaba.damo.mindopt;
 
+import com.alibaba.damo.mindopt.impl.MdoNativeAPI;
 import com.alibaba.damo.mindopt.impl.MdoNativeModel;
 
 public class Mdo {
@@ -88,6 +89,14 @@ public class Mdo {
     public static final String STR_ATTR_COL_NAME = "ColName";
     public static final String STR_ATTR_ROW_NAME = "RowName";
 
+    // remote attribute names
+    public static final String STR_ATTR_REMOTE_TOKEN = "Remote/Token";
+    public static final String STR_ATTR_REMOTE_DESC = "Remote/Desc";
+    public static final String STR_ATTR_REMOTE_SERVER = "Remote/Server";
+    public static final String STR_ATTR_REMOTE_FILE_MODEL = "Remote/File/Model";
+    public static final String STR_ATTR_REMOTE_FILE_PARAM = "Remote/File/Param";
+    public static final String STR_ATTR_REMOTE_FILE_SOLN = "Remote/File/Soln";
+    public static final String STR_ATTR_REMOTE_FILE_PATH = "Remote/File/Path";
 
     // Solution attribute names
     public static final String INT_ATTR_HAS_SOLUTION = "HasSolution";
@@ -110,6 +119,6 @@ public class Mdo {
      * @param nativeLibrary full path of mindopt native dynamic library
      */
     public static void load(String nativeLibrary) {
-        MdoNativeModel.load(nativeLibrary);
+        MdoNativeAPI.InstanceHolder.load(nativeLibrary);
     }
 }

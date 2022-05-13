@@ -16,7 +16,7 @@
 
 package com.alibaba.damo.mindopt;
 
-public interface MdoMatrix extends MdoAttrAccessor, MdoParamAccessor {
+public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     /**
      * Add a single decision variable
      * @param lb lower bound for this variable, set to {@code -Mdo.INFINITY} if it's lower-bound-free
@@ -390,6 +390,40 @@ public interface MdoMatrix extends MdoAttrAccessor, MdoParamAccessor {
      * @param vars the variable objects to specify column ids
      */
     void deleteElements(MdoCons[] conss, MdoVar[] vars);
+
+    /**
+     * Delete all elements from the constraint matrix.
+     */
+    void deleteAllElements();
+
+    /**
+     * Retrieve a set of values of all specified elements in the quadratic matrix of a quadratic program.
+     * @param vars1 array that holds the first variable of quadratic terms.
+     * @param vars2 array that holds the second variable of quadratic terms.
+     * @return array of current nonzero values of all specified terms.
+     */
+    double[] getQuadraticElements(MdoVar[] vars1, MdoVar[] vars2);
+
+    /**
+     * Modify a set of values of all specified elements in the quadratic matrix of a quadratic program.
+     * @param vars1 array that holds the first variable of quadratic terms.
+     * @param vars2 array that holds the second variable of quadratic terms.
+     * @param values array that holds the coefficient of all specified terms.
+     */
+    void setQuadraticElements(MdoVar[] vars1, MdoVar[] vars2, double[] values);
+
+    /**
+     * Delete a set of elements from the quadratic matrix of a quadratic program.
+     * @param vars1 array that holds the first variable of quadratic terms.
+     * @param vars2 array that holds the second variable of quadratic terms.
+     */
+    void deleteQuadraticElements(MdoVar[] vars1, MdoVar[] vars2);
+
+
+    /**
+     * Delete all elements from the quadratic matrix of a quadratic program.
+     */
+    void deleteAllQuadraticElements();
 
     /**
      * Change the value of a string-valued model attribute

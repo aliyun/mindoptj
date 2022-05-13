@@ -207,7 +207,11 @@ public class MdoLoDiet2 {
 
         // Load native library
         Mdo.load(libraryPath);
-        MdoModel model = new MdoModel();
+
+        // Create mindopt environment and create mindopt models through mindopt environment.
+        // The previous interface for creating models `MdoModel()` is about to be deprecated.
+        MdoEnv env = new MdoEnv();
+        MdoModel model = env.createModel();
 
         try {
             model.setIntAttr(Mdo.INT_ATTR_MIN_SENSE, 1);
@@ -292,6 +296,9 @@ public class MdoLoDiet2 {
             // Or it will be freed automatically after a system GC
             // But native memory usage is GC-invisible, GC may not be triggered
             model.free();
+
+            // Free environment is necessary if you creatModel throng environment.
+            env.free();
         }
     }
 }
