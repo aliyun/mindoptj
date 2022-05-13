@@ -6,7 +6,7 @@
 
   <groupId>com.alibaba.damo</groupId>
   <artifactId>mindoptj</artifactId>
-  <version>0.15.1</version>
+  <version>0.19.0</version>
   <packaging>jar</packaging>
 
   <name>mindoptj</name>
