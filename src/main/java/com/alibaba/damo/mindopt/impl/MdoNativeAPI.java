@@ -616,5 +616,7 @@ public interface MdoNativeAPI extends Library {
             Pointer /* int * */ idx_cols
     );
 
-
+    int /* MdoResult */ Mdo_relaxIntegrality(
+            Pointer /* void * */ mdl
+    );
 }

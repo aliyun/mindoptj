@@ -577,4 +577,6 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
      * Release native memory allocated of matrix
      */
     void free();
+
+    void relaxIntegrality();
 }

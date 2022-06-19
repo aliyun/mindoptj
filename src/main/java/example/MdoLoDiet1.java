@@ -198,7 +198,7 @@ public class MdoLoDiet1 {
     });
 
 
-    public static void main(String args[]) {
+    public static void main(String[] args) {
         String libraryPath = System.getenv("MDO_NATIVE_LIBRARY");
         if (libraryPath == null) {
             System.err.println("Env variable MDO_NATIVE_LIBRARY needs to be set");
@@ -215,15 +215,15 @@ public class MdoLoDiet1 {
 
         try {
             model.setMinObjSense();
-            Map<Map.Entry<String, String>, Double> reqValueMap = new HashMap<Map.Entry<String, String>, Double>();
-            Map<String, MdoVar> namedVars = new HashMap<String, MdoVar>();
+            Map<Map.Entry<String, String>, Double> reqValueMap = new HashMap<>();
+            Map<String, MdoVar> namedVars = new HashMap<>();
 
             // Construct data structure
             for (int i = 0; i < reqValue.size(); i++) {
                 String reqName = reqValue.getString(i, 0);
                 String foodName = reqValue.getString(i, 1);
                 double value = reqValue.getDouble(i, 2);
-                reqValueMap.put(new AbstractMap.SimpleEntry<String, String>(reqName, foodName), value);
+                reqValueMap.put(new AbstractMap.SimpleEntry<>(reqName, foodName), value);
             }
 
             // Add variables
@@ -242,7 +242,7 @@ public class MdoLoDiet1 {
                 MdoExprLinear expr = new MdoExprLinear();
                 for (int j = 0; j < food.size(); j++) {
                     String foodName = food.getString(j, 0);
-                    double coeff = reqValueMap.get(new AbstractMap.SimpleEntry<String, String>(reqName, foodName));
+                    double coeff = reqValueMap.get(new AbstractMap.SimpleEntry<>(reqName, foodName));
                     expr.addTerm(coeff, namedVars.get(foodName));
                 }
                 double lhs = req.getDouble(i, 1);
@@ -289,7 +289,7 @@ public class MdoLoDiet1 {
             // But native memory usage is GC-invisible, GC may not be triggered
             model.free();
 
-            // Free environment is necessary if you creatModel throng environment.
+            // Free environment is necessary if you create model through `env.createModel`.
             env.free();
         }
     }

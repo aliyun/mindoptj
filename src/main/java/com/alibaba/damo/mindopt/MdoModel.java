@@ -42,8 +42,8 @@ import java.util.List;
  */
 public class MdoModel implements MdoProblem, MdoSolver {
     protected MdoNativeModel model = new MdoNativeModel();
-    protected List<MdoVar> vars = new ArrayList<MdoVar>();
-    protected List<MdoCons> conss = new ArrayList<MdoCons>();
+    protected List<MdoVar> vars = new ArrayList<>();
+    protected List<MdoCons> conss = new ArrayList<>();
     protected boolean freed = false;
     /**
      * Default constructor
@@ -290,7 +290,7 @@ public class MdoModel implements MdoProblem, MdoSolver {
 
     @Override
     public MdoCons[] addConss(int count) {
-        MdoCons conss[] = new MdoCons[count];
+        MdoCons[] conss = new MdoCons[count];
         for (int i = 0; i < count; i++) {
             int code = model.addRow(Mdo.NEGATIVE_INFINITY, 0, 0, Pointer.NULL, Pointer.NULL, Pointer.NULL);
             MdoResult.checkResult(code);
@@ -375,7 +375,7 @@ public class MdoModel implements MdoProblem, MdoSolver {
 
     @Override
     public void deleteVars(MdoVar[] vars) {
-        List<Integer> indices = new ArrayList<Integer>();
+        List<Integer> indices = new ArrayList<>();
         for (MdoVar var : vars) {
             indices.add(var.getIndex());
         }
@@ -404,7 +404,7 @@ public class MdoModel implements MdoProblem, MdoSolver {
 
     @Override
     public void deleteConss(MdoCons[] conss) {
-        List<Integer> indices = new ArrayList<Integer>();
+        List<Integer> indices = new ArrayList<>();
         for (MdoCons cons : conss) {
             indices.add(cons.getIndex());
         }
@@ -972,8 +972,8 @@ public class MdoModel implements MdoProblem, MdoSolver {
 
     @Override
     public IIS computeIIS() {
-        final List<Integer> idxRows = new ArrayList<Integer>();
-        final List<Integer> idxCols = new ArrayList<Integer>();
+        final List<Integer> idxRows = new ArrayList<>();
+        final List<Integer> idxCols = new ArrayList<>();
 
         int numRows = model.getNumRows();
         int numCols = model.getNumCols();
@@ -1001,5 +1001,10 @@ public class MdoModel implements MdoProblem, MdoSolver {
                 return idxCols;
             }
         };
+    }
+
+    @Override
+    public void relaxIntegrality() {
+        MdoResult.checkResult(model.relaxIntegrality());
     }
 }

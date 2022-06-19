@@ -1568,4 +1568,14 @@ public class MdoNativeModel {
                 idx_cols
         );
     }
+
+    /**
+     *  Remove all integrality requirements in the model.
+     *  @return MdoResult code
+     */
+    public int relaxIntegrality() {
+        return inst().Mdo_relaxIntegrality(
+                getModel()
+        );
+    }
 }

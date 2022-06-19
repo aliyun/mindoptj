@@ -21,15 +21,12 @@ import com.alibaba.damo.mindopt.*;
 /**
  *  Description
  *  -----------
- *
- *  Quadratic optimization (row-wise input).
+ *  Mixed Integer Linear Optimization (row-wise input).
  *
  *  Formulation
  *  -----------
- *
  *  Minimize
  *    obj: 1 x0 + 1 x1 + 1 x2 + 1 x3
- *         + 1/2 [ x0^2 + x1^2 + x2^2 + x3^2 + x0 x1]
  *  Subject To
  *   c0 : 1 x0 + 1 x1 + 2 x2 + 3 x3 >= 1
  *   c1 : 1 x0 - 1 x2 + 6 x3 = 1
@@ -38,10 +35,12 @@ import com.alibaba.damo.mindopt.*;
  *    0 <= x1
  *    0 <= x2
  *    0 <= x3
+ *  Integers
+ *    x0 x1 x2
  *  End
  */
 
-public class MdoQoEx1 {
+public class MdoMiloEx1 {
     public static void main(String[] args) {
         String libraryPath = System.getenv("MDO_NATIVE_LIBRARY");
         if (libraryPath == null) {
@@ -66,7 +65,7 @@ public class MdoQoEx1 {
             x[0] = model.addVar(0.0, 10.0, 1.0, false, "x0");
             x[1] = model.addVar(0.0, Mdo.INFINITY, 1.0, false, "x1");
             x[2] = model.addVar(0.0, Mdo.INFINITY, 1.0, false, "x2");
-            x[3] = model.addVar(0.0, Mdo.INFINITY, 1.0, false, "x3");
+            x[3] = model.addVar(0.0, Mdo.INFINITY, 1.0, true, "x3");
 
             // Add constraints
             MdoExprLinear c0 = new MdoExprLinear();
@@ -82,14 +81,9 @@ public class MdoQoEx1 {
             c1.addTerm(6.0, x[3]);
             model.addCons(c1, Mdo.EQUAL, 1.0, "c1");
 
-            // Add quadratic objective matrix Q
-            MdoExprQuad obj = new MdoExprQuad();
-            obj.addTerm(1.0, x[0], x[0]);
-            obj.addTerm(0.5, x[1], x[0]);
-            obj.addTerm(1.0, x[1], x[1]);
-            obj.addTerm(1.0, x[2], x[2]);
-            obj.addTerm(1.0, x[3], x[3]);
-            model.setQuadraticElements(obj.getVars1(), obj.getVars2(), obj.getCoeffs());
+            // If you call `relaxIntegrality` to remove all integrality requirements in the model,
+            // the `MILO` problem will turn to `LO` problem.
+            // model.relaxIntegrality();
 
             // Solve model
             model.solveProb();
