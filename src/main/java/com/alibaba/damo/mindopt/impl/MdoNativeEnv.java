@@ -32,6 +32,7 @@ public class MdoNativeEnv {
 
     /**
      * Create a mindopt environment with default parameter settings.
+     * @param model [in] The mindopt model native interface.
      * @return MdoResult code
      */
     public int createMdlWithEnv(
