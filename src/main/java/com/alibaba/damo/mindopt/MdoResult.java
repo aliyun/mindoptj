@@ -43,6 +43,8 @@ public enum MdoResult{
     MDO_DIRECTORY_ERROR(-1003),
     /** (I/O) Failed to parse the file.  */
     MDO_FORMAT_ERROR(-1100),
+    /** (I/O) Failed to load model/parameter from file due to incompatible version error. */
+    MDO_VERSION_ERROR(-1101),
     /** (I/O) The input token ID for the remote computing is not valid.  */
     MDO_REMOTE_INVALID_TOKEN(-1200),
     /** (I/O) Failed to connect to the remote computing server.  */
@@ -83,6 +85,14 @@ public enum MdoResult{
     MDO_ABORT_TIME_LIMIT(-9001),
     /** Control-C command was captured in optimization.  */
     MDO_ABORT_CTRL_C(-9002),
+    /** Node limit was reached in optimization. */
+    MDO_ABORT_NODE_LIMIT(-9003),
+    /** Stalling node limit was reached in optimization. */
+    MDO_ABORT_STALLING_NODE_LIMIT(-9004),
+    /** Selected optimization method is not supported. */
+    MDO_ABORT_INVALID_METHOD(-9011),
+    /** Optimization solver is not available for the input model. */
+    MDO_ABORT_SOLVER_NOT_AVAILABLE(-9012),
     /** Numerical difficulties in Simplex algorithm.  */
     MDO_SIMPLEX_NUMERIC(-10000),
     /** Numerical difficulties in Interior-point algorithm.  */
