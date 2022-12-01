@@ -18,6 +18,9 @@ package com.alibaba.damo.mindopt;
 
 import java.util.*;
 
+/**
+ * MdoExprQuad Class
+ */
 public class MdoExprQuad implements MdoExpr {
     /**
      * Data Structure
@@ -45,12 +48,16 @@ public class MdoExprQuad implements MdoExpr {
 
     /**
      * Copy constructor
-     * @param another another linear expression
+     * @param another another MdoExprQuad object
      */
     public MdoExprQuad(MdoExprQuad another) {
         this.add(another);
     }
 
+    /**
+     * Copy constructor
+     * @param le a linear expression
+     */
     public MdoExprQuad(MdoExprLinear le) {
         this.linear = le;
     }

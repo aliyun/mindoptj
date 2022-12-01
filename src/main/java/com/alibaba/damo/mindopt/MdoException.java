@@ -16,21 +16,28 @@
 
 package com.alibaba.damo.mindopt;
 
+/**
+ *  MdoException An error exception class.
+ */
 public class MdoException extends RuntimeException {
-    private int code = 0;
+    private int code;
 
+    /** Constructor */
     public MdoException(int code) {
         this.code = code;
     }
 
+    /** Get the error code */
     public int getCode() {
         return this.code;
     }
 
+    /** Get the error info corresponding to the error code */
     public MdoResult getResult() {
         return MdoResult.fromCode(code);
     }
 
+    /** Get the error error and error info */
     @Override
     public String getMessage() {
         return "Error: " + getCode() + ": " + getResult().name();

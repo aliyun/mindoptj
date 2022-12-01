@@ -189,7 +189,7 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     MdoCons addRange(MdoExprLinear expr, double lower, double upper, String name);
 
     /**
-     * Add constraints, constraints are all of the form 0 &lt;= 0.
+     * Add constraints, constraints are all the form 0 &lt;= 0.
      * @param count number of constraints to be added
      * @return the newly created constraint objects
      */
@@ -442,7 +442,7 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     String getStrAttrIndex(String att, int index);
 
     /**
-     * Change the value of a integer-valued model attribute
+     * Change the value of an integer-valued model attribute
      * @param att the attribute name
      * @param index the index of array to access
      * @param val the new attribute value
@@ -450,7 +450,7 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     void setIntAttrIndex(String att, int index, int val);
 
     /**
-     * Get the value of a integer-valued model attribute
+     * Get the value of an integer-valued model attribute
      * @param att the attribute name
      * @param index the index of array to access
      * @return the corresponding attribute value
@@ -483,7 +483,7 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     void setIntAttrArray(String att, int start, int len, int[] val);
 
     /**
-     * Get the values of the specified array of a integer-valued row/column attribute
+     * Get the values of the specified array of an integer-valued row/column attribute
      * @param att the attribute name
      * @param start index of the first element to access
      * @param len number of elements to access
@@ -510,7 +510,7 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     double[] getRealAttrArray(String att, int start, int len);
 
     /**
-     * Change the values of the specified array of a integer-valued column attribute
+     * Change the values of the specified array of an integer-valued column attribute
      * @param att the attribute name
      * @param vars the variable objects
      * @param vals the new values for the specified array of the attribute
@@ -518,7 +518,7 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     void setIntAttrVars(String att, MdoVar[] vars, int[] vals);
 
     /**
-     * Get the values of the specified array of a integer-valued column attribute
+     * Get the values of the specified array of an integer-valued column attribute
      * @param att the attribute name
      * @param vars the variable objects
      * @return values for the specified array of the attribute
@@ -542,7 +542,7 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     double[] getRealAttrVars(String att, MdoVar[] vars);
 
     /**
-     * Change the values of the specified array of a integer-valued row attribute
+     * Change the values of the specified array of an integer-valued row attribute
      * @param att the attribute name
      * @param conss the constraint objects
      * @param vals the new values for the specified array of the attribute
@@ -550,7 +550,7 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     void setIntAttrConss(String att, MdoCons[] conss, int[] vals);
 
     /**
-     * Get the values of the specified array of a integer-valued row attribute
+     * Get the values of the specified array of an integer-valued row attribute
      * @param att the attribute name
      * @param conss the constraint objects
      * @return values for the specified array of the attribute
@@ -579,4 +579,75 @@ public interface MdoProblem extends MdoAttrAccessor, MdoParamAccessor {
     void free();
 
     void relaxIntegrality();
+
+    /**
+     * Add a block variable (symmetric positive semidefinite matrix) to the model.
+     * @param dim_mat dimension of the added block variable.
+     */
+    void addSymMat(int dim_mat);
+    /**
+     * Add a block variable (symmetric positive semidefinite matrix) to the model.
+     * @param dim_mat dimension of the added block variable.
+     * @param mat_name name of the added block variable. Can be NULL.
+     */
+    void addSymMat(int dim_mat, String mat_name);
+
+    /**
+     * Add multiple block variables to the model.
+     * @param num_mats number of block variables to be added.
+     * @param dim_mats integer array that holds the dimension of the block variables.
+     */
+    void addSymMats(int num_mats, int[] dim_mats);
+    /**
+     * Add multiple block variables to the model.
+     * @param num_mats number of block variables to be added.
+     * @param dim_mats integer array that holds the dimension of the block variables.
+     * @param mat_names array to hold the matrix variable names. If NULL, then default names will be used.
+     */
+    void addSymMats(int num_mats, int[] dim_mats, String[] mat_names);
+
+    /**
+     * Replace the values of the specified block variable in the objective function.
+     *
+     *    If mat_row_indices[e] is not equal to mat_col_indices[e],
+     *    element (mat_row_indices[e],mat_col_indices[e]) and element (mat_col_indices[e],mat_row_indices[e])
+     *    are changed to values[e] to ensure the symmetricity. As such, user should input only the lower
+     *    triangular part or upper triangular part of the block variable.
+     * @param mat_index block variable index.
+     * @param size number of elements of the block variable to access.
+     * @param mat_row_indices array that holds the row indices of the block variable.
+     * @param mat_col_indices array that holds the column indices of the block variable.
+     * @param mat_values array that holds the objective coefficients associated with the block variable.
+     */
+    void replaceSymMatObjs(int mat_index, int size, int[] mat_row_indices, int[] mat_col_indices, double []mat_values);
+
+    /**
+     * Replace the values of the specified block variable in the constraints.
+     *    If mat_row_indices[e] is not equal to mat_col_indices[e],
+     *    element (mat_row_indices[e],mat_col_indices[e]) and element (mat_col_indices[e],mat_row_indices[e])
+     *    are changed to values[e] to ensure the symmetricity. As such, user should input only the lower
+     *    triangular part or upper triangular part of the block variable.
+     * @param row_index row index.
+     * @param mat_index block variable index.
+     * @param size number of elements to access.
+     * @param mat_row_indices array that holds the row indices of the block variable.
+     * @param mat_col_indices array that holds the column indices of the  block variable.
+     * @param mat_values array that holds the nonzero values associated with the block variable.
+     */
+    void replaceSymMatElements(int row_index, int mat_index, int size, int[] mat_row_indices, int[] mat_col_indices, double[] mat_values);
+
+    /**
+     * Retrieve the values associated with the specified block variable of the attribute.
+     * @param att a real-valued symmetric variable attribute to access.
+     * @param mat_index block variable index.
+     * @param size number of elements of the block variable to access.
+     * @param mat_row_indices an array that holds the row indices of the block variable.
+     * @param mat_col_indices an array that holds the column indices of the block variable.
+     * @return A vector object that will hold the values associated with the specified block variable of the attribute.
+     *
+     *    If `size` is greater than or equal to the number of elements in the specified block matrix, then
+     *    all elements in the specified block matrix will be accessed. As a result, `mat_row_indices` and
+     *    `mat_col_indices` will not be accessed.
+     */
+    double[] getRealAttrSymMat(String att, int mat_index, int size, int[] mat_row_indices, int[] mat_col_indices);
 }

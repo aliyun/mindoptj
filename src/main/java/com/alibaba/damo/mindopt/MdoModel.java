@@ -54,6 +54,19 @@ public class MdoModel implements MdoProblem, MdoSolver {
         model.createMdl();
     }
 
+    /**
+     * Copy constructor
+     *   Create a copy of the model object. Note that user-specified options will also be copied.
+     * @param mdl a MdoModel has already existed.
+     */
+    public MdoModel(MdoModel mdl) {
+        model = new MdoNativeModel(mdl.model);
+        vars = new ArrayList<>(mdl.vars);
+        conss = new ArrayList<>(mdl.conss);
+        freed = mdl.freed;
+        model.copyMdl(mdl.model);
+    }
+
     private MdoModel(MdoEnv env) {
         env.env.createMdlWithEnv(model);
     }
@@ -1006,5 +1019,46 @@ public class MdoModel implements MdoProblem, MdoSolver {
     @Override
     public void relaxIntegrality() {
         MdoResult.checkResult(model.relaxIntegrality());
+    }
+
+    @Override
+    public void addSymMat(int dim_mat) {
+        MdoResult.checkResult(model.addSymMat(dim_mat, MemoryUtil.charArray("")));
+    }
+
+    @Override
+    public void addSymMat(int dim_mat, String name_mat) {
+        MdoResult.checkResult(model.addSymMat(dim_mat, MemoryUtil.charArray(name_mat)));
+    }
+
+    @Override
+    public void addSymMats(int num_mats, int[] dim_mats) {
+        for (int i = 0; i < num_mats; i++) {
+            this.addSymMat(dim_mats[i]);
+        }
+    }
+
+    @Override
+    public void addSymMats(int num_mats, int[] dim_mats, String[] mat_names) {
+        for (int i = 0; i < num_mats; i++) {
+            this.addSymMat(dim_mats[i], mat_names[i]);
+        }
+    }
+
+    @Override
+    public void replaceSymMatObjs(int mat_index, int size, int[] mat_row_indices, int[] mat_col_indices, double[] mat_values) {
+        MdoResult.checkResult(model.replaceSymMatObjs(mat_index, size, MemoryUtil.intArray(mat_row_indices), MemoryUtil.intArray(mat_col_indices), MemoryUtil.doubleArray(mat_values)));
+    }
+
+    @Override
+    public void replaceSymMatElements(int row_index, int mat_index, int size, int[] mat_row_indices, int[] mat_col_indices, double[] mat_values) {
+        MdoResult.checkResult(model.replaceSymMatElements(row_index, mat_index, size, MemoryUtil.intArray(mat_row_indices), MemoryUtil.intArray(mat_col_indices), MemoryUtil.doubleArray(mat_values)));
+    }
+
+    @Override
+    public double[] getRealAttrSymMat(String att, int mat_index, int size, int[] mat_row_indices, int[] mat_col_indices) {
+        Pointer vals = MemoryUtil.doubleArray(size);
+        MdoResult.checkResult(model.getRealAttrSymMat(MemoryUtil.charArray(att), mat_index, size, MemoryUtil.intArray(mat_row_indices), MemoryUtil.intArray(mat_col_indices), vals));
+        return vals.getDoubleArray(0, size);
     }
 }

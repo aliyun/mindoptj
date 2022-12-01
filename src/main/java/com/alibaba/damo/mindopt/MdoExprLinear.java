@@ -100,7 +100,7 @@ public class MdoExprLinear implements MdoExpr {
     }
 
     /**
-     * Add a single to to this linear expression
+     * Add a single to this linear expression
      * @param coeff the coefficient
      * @param var the variable object
      */

@@ -31,6 +31,12 @@ public class MdoNativeModel {
         return MdoNativeAPI.InstanceHolder.get();
     }
 
+    public MdoNativeModel() {}
+
+    public MdoNativeModel(MdoNativeModel native_model) {
+        model.setValue(native_model.getModel());
+    }
+
     private Pointer getModel() {
         return model.getValue();
     }
@@ -467,7 +473,7 @@ public class MdoNativeModel {
     /**
      * Redirect output log to a user-defined callback function.
      * @param logcb [in] User defined callback function.
-     * @param userdata [in] User defined data taht will be passed into the callback function.
+     * @param userdata [in] User defined data that will be passed into the callback function.
      * @return MdoResult code
      */
     public int setLogCallback(
@@ -490,6 +496,15 @@ public class MdoNativeModel {
                 model
         );
     }
+
+    public void copyMdl(
+            MdoNativeModel native_mdl
+    ) {
+        model.setValue( inst().Mdo_copyMdl(
+                native_mdl.getModel()
+        ));
+    }
+
     /**
      * Destroy a model and all associated data.
      */
@@ -507,13 +522,13 @@ public class MdoNativeModel {
      * @param indices [in] An integer array that defines the column index of nonzero elements in the CSC matrix.
      * @param values [in] A real array that defines the values of nonzero elements in the CSC matrix.
      * @param lbs [in] A real array that holds the lower bounds of variables. Can be NULL; in this case 0 will be used as the default value for all lower bounds.
-     * @param ubs [in] A real array that holds the upper bounds of variables. Can be NULL; in this case $ \infty $ will be used as the default value for all upper bounds.
+     * @param ubs [in] A real array that holds the upper bounds of variables. Can be NULL; in this case infinity will be used as the default value for all upper bounds.
      * @param objs [in] A real array that holds the linear objective coefficients. Can be NULL; in this case 0 will be used as the default value for all objective coefficients.
      * @param are_integers [in] A flag array that specifies if a variable is an integer variable or not. Can be NULL; in this case all variables will be treated as continuous variables.
      * @param obj_const [in] The objective offset.
      * @param is_min [in] A boolean flag to specify if the objective function has a minimization sense.
-     * @param lhss [in] A real array that holds the lower bounds (LHS-values) of constraints. Can be NULL; in this case $ -\infty $ will be used as the default value for all lower bounds.
-     * @param rhss [in] A real array that holds the upper bounds (RHS-values) of constraints. Can be NULL; in this case $ \infty $ will be used as the default value for all upper bounds.
+     * @param lhss [in] A real array that holds the lower bounds (LHS-values) of constraints. Can be NULL; in this case negative infinity will be used as the default value for all lower bounds.
+     * @param rhss [in] A real array that holds the upper bounds (RHS-values) of constraints. Can be NULL; in this case infinity will be used as the default value for all upper bounds.
      * @param col_names [in] A pointer array that holds the column (variable) names. Can be NULL.
      * @param row_names [in] A pointer array that holds the row (constraint) names. Can be NULL.
      * @return MdoResult code
@@ -592,7 +607,7 @@ public class MdoNativeModel {
      * Add multiple columns to the model.
      * @param num_cols [in] Number of columns (variables).
      * @param lbs [in] A real array that holds the lower bounds of variables. Can be NULL; in this case 0 will be used as the default value for all lower bounds.
-     * @param ubs [in] A real array that holds the upper bounds of variables. Can be NULL; in this case $ \infty $ will be used as the default value for all upper bounds.
+     * @param ubs [in] A real array that holds the upper bounds of variables. Can be NULL; in this case infinity will be used as the default value for all upper bounds.
      * @param objs [in] A real array that holds the linear objective coefficients. Can be NULL; in this case 0 will be used as the default value for all objective coefficients.
      * @param bgn [in] An integer array that defines the beginning index of a CSC (compressed sparse column) matrix. Here bgn must have num_cols + 1 elements; as a result the length of the last column is bgn[num_cols] - bgn[num_cols - 1].
      * @param indices [in] An integer array that defines the column index of nonzero elements in the CSC matrix.
@@ -656,8 +671,8 @@ public class MdoNativeModel {
     /**
      * Add multiple rows to the model.
      * @param num_rows [in] Number of rows (constraints).
-     * @param lhss [in] A real array that holds the lower bounds (LHS-values) of constraints. Can be NULL; in this case $ -\infty $ will be used as the default value for all lower bounds.
-     * @param rhss [in] A real array that holds the upper bounds (RHS-values) of constraints. Can be NULL; in this case $ \infty $ will be used as the default value for all upper bounds.
+     * @param lhss [in] A real array that holds the lower bounds (LHS-values) of constraints. Can be NULL; in this case negative infinity will be used as the default value for all lower bounds.
+     * @param rhss [in] A real array that holds the upper bounds (RHS-values) of constraints. Can be NULL; in this case infinity will be used as the default value for all upper bounds.
      * @param bgn [in] An integer array that defines the beginning index of a CSR (compressed sparse row) matrix. Here bgn must have num_rows + 1 elements; as a result the length of the last row is bgn[num_rows] - bgn[num_rows - 1].
      * @param indices [in] An integer array that defines the row index of nonzero elements in the CSR matrix.
      * @param values [in] A real array that defines the values of nonzero elements in the CSR matrix.
@@ -689,10 +704,10 @@ public class MdoNativeModel {
      * @param num_cols [in] Number of columns to access.
      * @param col_indices [in] Indices of columns to access.
      * @param bgn [in] An integer array that defines the beginning index of a CSC (compressed sparse column) matrix. Here bgn must have num_cols + 1 elements; as a result the length of the last column is bgn[num_cols] - bgn[num_cols - 1]. Can by NULL.
-     * @param indices [in] An integer array that defines the column index of nonzero elements in the CSC matrix. Can by NULL.
-     * @param values [in] A real array that defines the values of nonzero elements in the CSC matrix. Can by NULL.
-     * @param size [in] Current lenghth of indices or values.
-     * @param real_size [out] Minimal required lenghth for indices or values.
+     * @param indices [in] An integer array that defines the column index of nonzero elements in the CSC matrix. Can be NULL.
+     * @param values [in] A real array that defines the values of nonzero elements in the CSC matrix. Can be NULL.
+     * @param size [in] Current length of indices or values.
+     * @param real_size [out] Minimal required length for indices or values.
      * @return MdoResult code
      */
     public int getCols(
@@ -720,10 +735,10 @@ public class MdoNativeModel {
      * @param num_rows [in] Number of rows to access.
      * @param row_indices [in] Indices of rows to access.
      * @param bgn [in] An integer array that defines the beginning index of a CSR (compressed sparse row) matrix. Here bgn must have num_rows + 1 elements; as a result the length of the last row is bgn[num_rows] - bgn[num_rows - 1]. Can by NULL.
-     * @param indices [in] An integer array that defines the row index of nonzero elements in the CSR matrix. Can by NULL.
-     * @param values [in] A real array that defines the values of nonzero elements in the CSR matrix. Can by NULL.
-     * @param size [in] Current lenghth of indices or values.
-     * @param real_size [out] Minimal required lenghth for indices or values.
+     * @param indices [in] An integer array that defines the row index of nonzero elements in the CSR matrix. Can be NULL.
+     * @param values [in] A real array that defines the values of nonzero elements in the CSR matrix. Can be NULL.
+     * @param size [in] Current length of indices or values.
+     * @param real_size [out] Minimal required length for indices or values.
      * @return MdoResult code
      */
     public int getRows(
@@ -840,7 +855,7 @@ public class MdoNativeModel {
      * Retrieve a set of objective coefficients.
      * @param size [in] Number of variables to access.
      * @param indices [in] An array that holds the index of variables to access.
-     * @param objs [out] An array that will hold the currnet objective coefficients of each specified variable.
+     * @param objs [out] An array that will hold the current objective coefficients of each specified variable.
      * @return MdoResult code
      */
     public int getObjs(
@@ -878,7 +893,7 @@ public class MdoNativeModel {
      * Retrieve a set of variable lower bounds.
      * @param size [in] Number of variables to access.
      * @param indices [in] An array that holds the index of variables to access.
-     * @param lbs [out] An array that will hold the currnet lower bounds of each specified variable.
+     * @param lbs [out] An array that will hold the current lower bounds of each specified variable.
      * @return MdoResult code
      */
     public int getLbs(
@@ -916,7 +931,7 @@ public class MdoNativeModel {
      * Retrieve a set of variable upper bounds.
      * @param size [in] Number of variables to access.
      * @param indices [in] An array that holds the index of variables to access.
-     * @param ubs [out] An array that will hold the currnet upper bounds of each specified variable.
+     * @param ubs [out] An array that will hold the current upper bounds of each specified variable.
      * @return MdoResult code
      */
     public int getUbs(
@@ -1046,7 +1061,7 @@ public class MdoNativeModel {
      * Retrieve a set of LHS (left-hand-side) values for each specified constraint.
      * @param size [in] Number of constraints to access.
      * @param indices [in] An array that holds the index of constraints to access.
-     * @param lhss [out] An array that will hold the currnet LHS values of each specified constraint.
+     * @param lhss [out] An array that will hold the current LHS values of each specified constraint.
      * @return MdoResult code
      */
     public int getLhss(
@@ -1084,7 +1099,7 @@ public class MdoNativeModel {
      * Retrieve a set of RHS (right-hand-side) values for each specified constraint.
      * @param size [in] Number of constraints to access.
      * @param indices [in] An array that holds the index of constraints to access.
-     * @param rhss [out] An array that will hold the currnet RHS values of each specified constraint.
+     * @param rhss [out] An array that will hold the current RHS values of each specified constraint.
      * @return MdoResult code
      */
     public int getRhss(
@@ -1576,6 +1591,49 @@ public class MdoNativeModel {
     public int relaxIntegrality() {
         return inst().Mdo_relaxIntegrality(
                 getModel()
+        );
+    }
+
+    public int addSymMat(int dim_mat, Pointer name_mat) {
+        return inst().Mdo_addSymMat(
+                getModel(),
+                dim_mat,
+                name_mat
+        );
+    }
+
+    public int replaceSymMatObjs(int mat_index, int size, Pointer mat_row_indices, Pointer mat_col_indices, Pointer mat_values) {
+        return inst().Mdo_replaceSymMatObjs(
+                getModel(),
+                mat_index,
+                size,
+                mat_row_indices,
+                mat_col_indices,
+                mat_values
+        );
+    }
+
+    public int replaceSymMatElements(int row_index, int mat_index, int size, Pointer mat_row_indices, Pointer mat_col_indices, Pointer mat_values) {
+        return inst().Mdo_replaceSymMatElements(
+                getModel(),
+                row_index,
+                mat_index,
+                size,
+                mat_row_indices,
+                mat_col_indices,
+                mat_values
+        );
+    }
+
+    public int getRealAttrSymMat(Pointer att, int mat_index, int size, Pointer mat_row_indices, Pointer mat_col_indices, Pointer mat_values) {
+        return inst().Mdo_getRealAttrSymMat(
+                getModel(),
+                att,
+                mat_index,
+                size,
+                mat_row_indices,
+                mat_col_indices,
+                mat_values
         );
     }
 }

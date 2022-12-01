@@ -219,6 +219,10 @@ public interface MdoNativeAPI extends Library {
             PointerByReference /* void * * */ mdl
     );
 
+    Pointer /* void * */ Mdo_copyMdl(
+            Pointer /* void * */ mdl
+    );
+
     int /* MdoResult */ Mdo_loadModel(
             Pointer /* void * */ mdl,
             int /* int */ num_cols,
@@ -618,5 +622,40 @@ public interface MdoNativeAPI extends Library {
 
     int /* MdoResult */ Mdo_relaxIntegrality(
             Pointer /* void * */ mdl
+    );
+
+    int /* MdoResult */ Mdo_addSymMat(
+            Pointer /* void */ mdl,
+            int /* int * */ dim_mat,
+            Pointer /* char * */ mat_name
+    );
+
+    int /* MdoResult */ Mdo_replaceSymMatObjs(
+            Pointer /* void */ mdl,
+            int /* int */ mat_index,
+            int /* int */ size,
+            Pointer /* int * */ mat_row_indices,
+            Pointer /* int * */ mat_col_indices,
+            Pointer /* double * */mat_values
+    );
+
+    int /* MdoResult */ Mdo_replaceSymMatElements(
+            Pointer /* void */ mdl,
+            int /* int */ row_index,
+            int /* int */ col_index,
+            int /* int */ size,
+            Pointer /* int * */ mat_row_indices,
+            Pointer /* int * */ mat_col_indices,
+            Pointer /* double * */ mat_values
+    );
+
+    int /* MdoResult */ Mdo_getRealAttrSymMat(
+            Pointer /* void */ mdl,
+            Pointer /* char * */ att,
+            int /* int */ mat_index,
+            int /* int */ size,
+            Pointer /* int * */ mat_row_indices,
+            Pointer /* int * */ mat_col_indices,
+            Pointer /* double * */ mat_values
     );
 }
