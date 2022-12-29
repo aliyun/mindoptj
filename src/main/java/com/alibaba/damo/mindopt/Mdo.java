@@ -152,9 +152,9 @@ public class Mdo {
     /** The value of the primal activity */
     public static final String REAL_ATTR_ACTIVITY = "Activity";
     /** The value of allowable gap (absolute) for MILP */
-    public static final String MDO_REAL_ATTR_MIP_GAP_ABS = "MIP/GapAbs";
+    public static final String REAL_ATTR_MIP_GAP_ABS = "MIP/GapAbs";
     /** The value of allowable gap (relative) for MILP */
-    public static final String MDO_REAL_ATTR_MIP_GAP_REL = "MIP/GapRel";
+    public static final String REAL_ATTR_MIP_GAP_REL = "MIP/GapRel";
     /** The value of reduced costs */
     public static final String REAL_ATTR_REDUCED_COST = "ReducedCost";
     /** The value of sym matrix primal solution */
