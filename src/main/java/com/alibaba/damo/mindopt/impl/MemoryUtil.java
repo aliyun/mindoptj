@@ -18,6 +18,7 @@ package com.alibaba.damo.mindopt.impl;
 
 import com.alibaba.damo.mindopt.Mdo;
 import com.sun.jna.Memory;
+import com.sun.jna.Native;
 import com.sun.jna.Pointer;
 import com.sun.jna.StringArray;
 
@@ -73,7 +74,7 @@ public class MemoryUtil {
         if (size == 0) {
             return EMPTY_MEMORY;
         }
-        return new Memory(Pointer.SIZE * size);
+        return new Memory(Native.POINTER_SIZE * size);
     }
 
     public static Pointer charArray(String str) {
@@ -125,6 +126,6 @@ public class MemoryUtil {
     }
 
     public static void setPointer(Pointer memory, int index, Pointer p) {
-        memory.setPointer(index * Pointer.SIZE, p);
+        memory.setPointer(index * Native.POINTER_SIZE, p);
     }
 }

@@ -73,8 +73,10 @@ public class Mdo {
     public static final String INT_PARAM_IPM_MAX_ITERS = "IPM/MaxIterations";
     /** The maximum number of nodes in MIP */
     public static final String INT_PARAM_MIP_MAX_NODES = "MIP/MaxNodes";
-    /** The Root Parallelism in MIP */
+    /** The root parallelism in MIP */
     public static final String INT_PARAM_MIP_ROOT_PARALLELISM = "MIP/RootParallelism";
+    /** Use MIP auto configuration */
+    public static final String INT_PARAM_MIP_AUTO_CONFIGURATION = "MIP/AutoConfiguration";
 
     /** The maximum solving time */
     public static final String REAL_PARAM_MAX_TIME = "MaxTime";
