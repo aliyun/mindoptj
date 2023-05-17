@@ -29,8 +29,8 @@ public enum MdoStatus{
     /** Model was proven to be primal unbounded.  */
     MDO_UNBOUNDED(3),
     /** Model was proven to be either primal infeasible or primal unbounded.  */
-    MDO_INF_OR_UBD(4);
-    /** A sub-optimal solution is availabel.  */
+    MDO_INF_OR_UBD(4),
+    /** A sub-optimal solution is available.  */
     MDO_SUB_OPTIMAL(5);
     int code = 0;
     MdoStatus(int code) { this.code = code; }
