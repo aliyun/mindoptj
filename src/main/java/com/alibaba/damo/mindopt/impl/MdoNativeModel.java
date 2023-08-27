@@ -1563,24 +1563,10 @@ public class MdoNativeModel {
     }
     /**
      * Compute an IIS.
-     * @param num_rows [out] Number of constraints involved in an IIS.
-     * @param idx_rows [out] A pointer array that holds all constraints involved in an IIS.
-     * @param num_cols [out] Number of variables involved in an IIS.
-     * @param idx_cols [out] A pointer array that holds all variables involved in an IIS.
-     * @return MdoResult code
      */
-    public int computeIIS(
-            Pointer num_rows,
-            Pointer idx_rows,
-            Pointer num_cols,
-            Pointer idx_cols
-    ) {
-        return inst().Mdo_computeIIS(
-                getModel(),
-                num_rows,
-                idx_rows,
-                num_cols,
-                idx_cols
+    public void computeIIS() {
+        inst().Mdo_computeIIS(
+                getModel()
         );
     }
 

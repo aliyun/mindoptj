@@ -612,12 +612,8 @@ public interface MdoNativeAPI extends Library {
             Pointer /* char * */ reason
     );
 
-    int /* MdoResult */ Mdo_computeIIS(
-            Pointer /* void * */ mdl,
-            Pointer /* int * */ num_rows,
-            Pointer /* int * */ idx_rows,
-            Pointer /* int * */ num_cols,
-            Pointer /* int * */ idx_cols
+    void Mdo_computeIIS(
+            Pointer /* void * */ mdl
     );
 
     int /* MdoResult */ Mdo_relaxIntegrality(

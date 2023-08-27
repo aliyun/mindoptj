@@ -22,22 +22,34 @@ package com.alibaba.damo.mindopt;
 public class MdoException extends RuntimeException {
     private int code;
 
-    /** Constructor */
+    /**
+     * Constructor
+     * @param code error code
+     */
     public MdoException(int code) {
         this.code = code;
     }
 
-    /** Get the error code */
+    /**
+     * Get the error code
+     * @return error code
+     */
     public int getCode() {
         return this.code;
     }
 
-    /** Get the error info corresponding to the error code */
+    /**
+     * Get the error info corresponding to the error code
+     * @return error info
+     */
     public MdoResult getResult() {
         return MdoResult.fromCode(code);
     }
 
-    /** Get the error error and error info */
+    /**
+     * Get the error code and error info
+     * @return error code and error info
+     */
     @Override
     public String getMessage() {
         return "Error: " + getCode() + ": " + getResult().name();

@@ -16,8 +16,8 @@
 
 package com.alibaba.damo.mindopt.impl;
 
-import com.alibaba.damo.mindopt.MdoProblem;
 import com.alibaba.damo.mindopt.MdoCons;
+import com.alibaba.damo.mindopt.MdoProblem;
 import com.alibaba.damo.mindopt.MdoVar;
 
 import java.util.Arrays;

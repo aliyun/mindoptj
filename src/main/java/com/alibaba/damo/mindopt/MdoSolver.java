@@ -180,7 +180,6 @@ public interface MdoSolver {
 
     /**
      * Compute an Irreducible Inconsistent Subsystem (IIS)
-     * @return the irreducible inconsistent rows and columns
      */
     void computeIIS();
 }
