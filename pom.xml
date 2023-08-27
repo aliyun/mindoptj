@@ -6,7 +6,7 @@
 
   <groupId>com.alibaba.damo</groupId>
   <artifactId>mindoptj</artifactId>
-  <version>0.24.2</version>
+  <version>0.25.1</version>
   <packaging>jar</packaging>
 
   <name>mindoptj</name>
@@ -24,6 +24,12 @@
     <developer>
       <name>sisheng.wf</name>
       <email>sisheng.wf@alibaba-inc.com</email>
+      <organization>Alibaba Group</organization>
+      <organizationUrl>https://www.alibabagroup.com</organizationUrl>
+    </developer>
+    <developer>
+      <name>songyuhua.syh</name>
+      <email>songyuhua.syh@alibaba-inc.com</email>
       <organization>Alibaba Group</organization>
       <organizationUrl>https://www.alibabagroup.com</organizationUrl>
     </developer>

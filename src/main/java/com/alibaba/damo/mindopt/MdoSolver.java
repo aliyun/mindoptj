@@ -65,23 +65,6 @@ public interface MdoSolver {
     }
 
     /**
-     * Irreducible Inconsistent Subsystem
-     */
-    interface IIS {
-        /**
-         * Get all constraints involved in an IIS
-         * @return all constraints involved in an IIS
-         */
-        List<Integer> getRowIndices();
-
-        /**
-         * Get all variables involved in an IIS
-         * @return all variables involved in an IIS
-         */
-        List<Integer> getColIndices();
-    }
-
-    /**
      * Log callback
      */
     interface LogCallback {
@@ -199,5 +182,5 @@ public interface MdoSolver {
      * Compute an Irreducible Inconsistent Subsystem (IIS)
      * @return the irreducible inconsistent rows and columns
      */
-    MdoModel.IIS computeIIS();
+    void computeIIS();
 }

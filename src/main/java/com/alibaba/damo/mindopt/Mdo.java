@@ -191,6 +191,11 @@ public class Mdo {
     /** The path for storing the model and parameter files in the remote computing service */
     public static final String STR_ATTR_REMOTE_FILE_PATH = "Remote/File/Path";
 
+    /** Whether the lower or upper bound of constraint belong to IIS. */
+    public static final String INT_ATTR_ROW_IIS = "RowIIS";
+    /** Whether the lower or upper bound of variable belong to IIS. */
+    public static final String INT_ATTR_COL_IIS = "ColIIS";
+
     /**
      * Load the mindopt native library, this needs to be called at very beginning
      * @param nativeLibrary full path of mindopt native dynamic library

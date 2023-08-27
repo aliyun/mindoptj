@@ -27,6 +27,8 @@ public enum MdoResult{
     MDO_ERROR(-1),
     /** Insufficient memory.  */
     MDO_NOMEMORY(-2),
+    /** Insufficient memory. */
+    MDO_INVALID_ARGUMENT (-3),
     /** License is not valid.  */
     MDO_INVALID_LICENSE(-10),
     /** MINDOPT_HOME not found. */
@@ -75,6 +77,10 @@ public enum MdoResult{
     MDO_NO_STATISTICS(-3002),
     /** Unrecognized basis status.  */
     MDO_INVALID_BASIS_STATUS(-3003),
+    /** No IIS available for the current model. */
+    MDO_IIS_NO_SOLN(-3004),
+    /** IIS is not available on a feasible model. */
+    MDO_IIS_FEASIBLE (-3005),
     /** Failed to change a parameter value.  */
     MDO_PARAM_SET_ERROR(-4000),
     /** Failed to retrieve a parameter value.  */
@@ -96,7 +102,9 @@ public enum MdoResult{
     /** Numerical difficulties in Simplex algorithm.  */
     MDO_SIMPLEX_NUMERIC(-10000),
     /** Numerical difficulties in Interior-point algorithm.  */
-    MDO_INTERIOR_NUMERIC(-20000);
+    MDO_INTERIOR_NUMERIC(-20000),
+    /** Numerical difficulties occurred while computing IIS. */
+    MDO_IIS_NUMERIC(-30000);
     int code = 0;
     MdoResult(int code) { this.code = code; }
     public static void checkResult(int code) { if (code != MDO_OKAY.code) throw new MdoException(code); }

@@ -984,36 +984,8 @@ public class MdoModel implements MdoProblem, MdoSolver {
     }
 
     @Override
-    public IIS computeIIS() {
-        final List<Integer> idxRows = new ArrayList<>();
-        final List<Integer> idxCols = new ArrayList<>();
-
-        int numRows = model.getNumRows();
-        int numCols = model.getNumCols();
-        Pointer idxRowArr = MemoryUtil.intArray(numRows);
-        Pointer idxColArr = MemoryUtil.intArray(numCols);
-        Pointer pNumRows = MemoryUtil.intByReference();
-        Pointer pNumCols = MemoryUtil.intByReference();
-
-        MdoResult.checkResult(model.computeIIS(pNumRows, idxRowArr, pNumCols, idxColArr));
-        for (int i = 0; i < pNumRows.getInt(0); i++) {
-            idxRows.add(MemoryUtil.getInt(idxRowArr, i));
-        }
-        for (int i = 0; i < pNumCols.getInt(0); i++) {
-            idxCols.add(MemoryUtil.getInt(idxColArr, i));
-        }
-
-        return new IIS() {
-            @Override
-            public List<Integer> getRowIndices() {
-                return idxRows;
-            }
-
-            @Override
-            public List<Integer> getColIndices() {
-                return idxCols;
-            }
-        };
+    public void computeIIS() {
+        model.computeIIS();
     }
 
     @Override
